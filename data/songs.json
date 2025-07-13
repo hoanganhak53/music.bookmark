@@ -1,0 +1,301 @@
+[
+  {
+    "id": "1",
+    "name": "Sầu Tím Thiệp Hồng",
+    "author": "Hoàng Thi Thơ",
+    "performers": [
+      "Lệ Quyên",
+      "Quang Hà"
+    ],
+    "image": "https://i.scdn.co/image/ab67616d0000b273c5649add07ed3720be9d5526",
+    "lyric": "Sầu tím thiệp hồng\nTôi gửi cho ai đó\nMột tấm thiệp hồng\nVới nỗi sầu tím\n\nTôi gửi cho ai đó\nMột tấm thiệp hồng\nVới nỗi sầu tím\nVà lời yêu thương...",
+    "refUrls": [
+      "https://www.youtube.com/watch?v=example1",
+      "https://open.spotify.com/track/example1"
+    ],
+    "categories": [
+      "Bolero",
+      "Nhạc Vàng"
+    ],
+    "tags": [
+      "Tình Yêu",
+      "Sầu",
+      "Classic",
+      "Buồn",
+      "Đầu To",
+      "Thùy Linh"
+    ],
+    "scores": [
+      5,
+      4,
+      5,
+      4,
+      5,
+      4,
+      5,
+      4,
+      5,
+      4,
+      5,
+      4,
+      5,
+      4,
+      5,
+      4,
+      5,
+      4,
+      5,
+      4,
+      5,
+      4,
+      5,
+      4,
+      5,
+      5
+    ],
+    "lastSungAt": "2025-07-13T08:04:22.361Z",
+    "singCount": 26,
+    "priority": 95,
+    "last_update": "2025-07-13T08:30:04.927Z",
+    "created_at": "2025-07-13T00:00:00Z"
+  },
+  {
+    "id": "2",
+    "name": "Tàu Anh Qua Núi",
+    "author": "Phạm Duy",
+    "performers": [
+      "Thái Thanh",
+      "Duy Khánh"
+    ],
+    "image": "https://i.scdn.co/image/ab67616d0000b273c5649add07ed3720be9d5527",
+    "lyric": "Tàu anh qua núi\nTàu em qua đồi\nTàu anh qua núi\nTàu em qua đồi\n\nTàu anh qua núi\nTàu em qua đồi\nTàu anh qua núi\nTàu em qua đồi...",
+    "refUrls": [
+      "https://www.youtube.com/watch?v=example2",
+      "https://open.spotify.com/track/example2"
+    ],
+    "categories": [
+      "Nhạc Vàng",
+      "Dân Ca"
+    ],
+    "tags": [
+      "Núi",
+      "Dân Ca",
+      "Classic",
+      "Xa Cách"
+    ],
+    "scores": [
+      4,
+      5,
+      4,
+      5,
+      4,
+      5,
+      4,
+      5,
+      4,
+      5,
+      4,
+      5,
+      4,
+      5,
+      4,
+      5,
+      4,
+      5,
+      3
+    ],
+    "lastSungAt": "2025-07-13T10:53:33.210Z",
+    "singCount": 19,
+    "priority": 85,
+    "last_update": "2025-07-13T10:53:33.210Z",
+    "created_at": "2024-01-01T00:00:00Z"
+  },
+  {
+    "id": "3",
+    "name": "Những Đồi Hoa Sim",
+    "author": "Dzũng Chinh",
+    "performers": [
+      "Hương Lan",
+      "Chế Linh"
+    ],
+    "image": "https://i.scdn.co/image/ab67616d0000b273c5649add07ed3720be9d5528",
+    "lyric": "Những đồi hoa sim\nÔi những đồi hoa sim tím\nChiều hoang biền biệt\nCó ai về thôn xưa\n\nNhững đồi hoa sim\nÔi những đồi hoa sim tím\nChiều hoang biền biệt\nCó ai về thôn xưa...",
+    "refUrls": [
+      "https://www.youtube.com/watch?v=example3",
+      "https://open.spotify.com/track/example3"
+    ],
+    "categories": [
+      "Nhạc Vàng",
+      "Bolero"
+    ],
+    "tags": [
+      "Hoa",
+      "Tình Yêu",
+      "Classic",
+      "Nhớ"
+    ],
+    "scores": [
+      5,
+      4,
+      5,
+      4,
+      5,
+      4,
+      5,
+      4,
+      5,
+      4,
+      5,
+      4,
+      5,
+      4,
+      5,
+      4,
+      5,
+      4,
+      5,
+      4,
+      5,
+      4
+    ],
+    "lastSungAt": "2024-01-08T20:15:00Z",
+    "singCount": 22,
+    "priority": 90,
+    "last_update": "2024-01-08T20:15:00Z",
+    "created_at": "2024-01-01T00:00:00Z"
+  },
+  {
+    "id": "4",
+    "name": "Đêm Đông",
+    "author": "Nguyễn Văn Thương",
+    "performers": [
+      "Khánh Ly",
+      "Trịnh Công Sơn"
+    ],
+    "image": "https://i.scdn.co/image/ab67616d0000b273c5649add07ed3720be9d5529",
+    "lyric": "Đêm đông xa trường\nLòng buồn lắm em ơi\nĐêm đông xa trường\nLòng buồn lắm em ơi\n\nĐêm đông xa trường\nLòng buồn lắm em ơi\nĐêm đông xa trường\nLòng buồn lắm em ơi...",
+    "refUrls": [
+      "https://www.youtube.com/watch?v=example4",
+      "https://open.spotify.com/track/example4"
+    ],
+    "categories": [
+      "Nhạc Vàng",
+      "Tình Khúc"
+    ],
+    "tags": [
+      "Đêm",
+      "Mùa Đông",
+      "Tình Yêu",
+      "Classic",
+      "Cô Đơn"
+    ],
+    "scores": [
+      4,
+      5,
+      4,
+      5,
+      4,
+      5,
+      4,
+      5,
+      4,
+      5,
+      4,
+      5,
+      4,
+      5,
+      4
+    ],
+    "lastSungAt": "2024-01-05T19:30:00Z",
+    "singCount": 15,
+    "priority": 80,
+    "last_update": "2024-01-05T19:30:00Z",
+    "created_at": "2024-01-01T00:00:00Z"
+  },
+  {
+    "id": "5",
+    "name": "Cô Láng Giềng",
+    "author": "Hoàng Thi Thơ",
+    "performers": [
+      "Lệ Quyên",
+      "Quang Hà"
+    ],
+    "image": "https://i.scdn.co/image/ab67616d0000b273c5649add07ed3720be9d5530",
+    "lyric": "Cô láng giềng ơi\nCô có nhớ tôi không\nCô láng giềng ơi\nCô có nhớ tôi không\n\nCô láng giềng ơi\nCô có nhớ tôi không\nCô láng giềng ơi\nCô có nhớ tôi không...",
+    "refUrls": [
+      "https://www.youtube.com/watch?v=example5",
+      "https://open.spotify.com/track/example5"
+    ],
+    "categories": [
+      "Bolero",
+      "Nhạc Vàng"
+    ],
+    "tags": [
+      "Láng Giềng",
+      "Tình Yêu",
+      "Bolero",
+      "Classic"
+    ],
+    "scores": [
+      4,
+      5,
+      4,
+      5,
+      4,
+      5,
+      4,
+      5,
+      4,
+      5,
+      4,
+      5
+    ],
+    "lastSungAt": "2024-01-12T14:20:00Z",
+    "singCount": 12,
+    "priority": 75,
+    "last_update": "2024-01-12T14:20:00Z",
+    "created_at": "2024-01-01T00:00:00Z"
+  },
+  {
+    "id": "6",
+    "name": "Hòn Vọng Phu",
+    "author": "Lê Thương",
+    "performers": [
+      "Thái Thanh",
+      "Duy Khánh"
+    ],
+    "image": "https://i.scdn.co/image/ab67616d0000b273c5649add07ed3720be9d5531",
+    "lyric": "Hòn vọng phu\nTôi đứng trên đỉnh núi\nHòn vọng phu\nTôi đứng trên đỉnh núi\n\nHòn vọng phu\nTôi đứng trên đỉnh núi\nHòn vọng phu\nTôi đứng trên đỉnh núi...",
+    "refUrls": [
+      "https://www.youtube.com/watch?v=example6",
+      "https://open.spotify.com/track/example6"
+    ],
+    "categories": [
+      "Nhạc Vàng",
+      "Dân Ca"
+    ],
+    "tags": [
+      "Hòn Vọng Phu",
+      "Dân Ca",
+      "Classic",
+      "Tình Yêu"
+    ],
+    "scores": [
+      5,
+      4,
+      5,
+      4,
+      5,
+      4,
+      5,
+      4,
+      5,
+      4
+    ],
+    "lastSungAt": "2024-01-03T16:45:00Z",
+    "singCount": 10,
+    "priority": 70,
+    "last_update": "2024-01-03T16:45:00Z",
+    "created_at": "2024-01-01T00:00:00Z"
+  }
+]
