@@ -14,12 +14,12 @@ export async function initDatabase() {
         performers TEXT[],
         image TEXT,
         lyric TEXT,
-        refUrls TEXT[],
+        ref_urls TEXT[],
         categories TEXT[],
         tags TEXT[],
         scores INTEGER[],
-        lastSungAt TIMESTAMP,
-        singCount INTEGER DEFAULT 0,
+        last_sung_at TIMESTAMP,
+        sing_count INTEGER DEFAULT 0,
         priority INTEGER DEFAULT 0,
         last_update TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
@@ -29,4 +29,4 @@ export async function initDatabase() {
   } catch (error) {
     console.error('Error initializing database:', error);
   }
-} 
+}

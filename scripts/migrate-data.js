@@ -22,12 +22,12 @@ async function migrateData() {
         performers TEXT[],
         image TEXT,
         lyric TEXT,
-        refUrls TEXT[],
+        ref_urls TEXT[],
         categories TEXT[],
         tags TEXT[],
         scores INTEGER[],
-        lastSungAt TIMESTAMP,
-        singCount INTEGER DEFAULT 0,
+        last_sung_at TIMESTAMP,
+        sing_count INTEGER DEFAULT 0,
         priority INTEGER DEFAULT 0,
         last_update TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
@@ -41,8 +41,8 @@ async function migrateData() {
     for (const song of songs) {
       await sql`
         INSERT INTO songs (
-          id, name, author, performers, image, lyric, refUrls, 
-          categories, tags, scores, lastSungAt, singCount, 
+          id, name, author, performers, image, lyric, ref_urls, 
+          categories, tags, scores, last_sung_at, sing_count, 
           priority, last_update, created_at
         ) VALUES (
           ${song.id}, ${song.name}, ${song.author}, 
@@ -63,4 +63,4 @@ async function migrateData() {
 // Chạy migration nếu file được execute trực tiếp
 if (import.meta.url === `file://${process.argv[1]}`) {
   migrateData();
-} 
+}

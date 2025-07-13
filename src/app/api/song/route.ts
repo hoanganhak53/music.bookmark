@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { Song } from '@/types';
 import { sql, initDatabase } from '@/utils/db';
+import { mapDatabaseToFrontend, mapFrontendToDatabase, mapDatabaseArrayToFrontend, isDatabaseSong } from '@/utils/dataMapping';
 
 // Khởi tạo database khi API được gọi lần đầu
 let dbInitialized = false;
@@ -15,7 +16,8 @@ async function ensureDatabase() {
 export async function GET() {
   try {
     await ensureDatabase();
-    const songs = await sql`SELECT * FROM songs ORDER BY priority DESC, last_update DESC`;
+    const dbSongs = await sql`SELECT * FROM songs ORDER BY priority DESC, last_update DESC`;
+    const songs = mapDatabaseArrayToFrontend(dbSongs);
     return NextResponse.json(songs);
   } catch (error) {
     console.error('Error fetching songs:', error);
@@ -44,17 +46,18 @@ export async function POST(req: NextRequest) {
       priority: songData.priority || 0,
     } as Song;
     
+    const dbSong = mapFrontendToDatabase(newSong);
     await sql`
       INSERT INTO songs (
-        id, name, author, performers, image, lyric, refUrls, 
-        categories, tags, scores, lastSungAt, singCount, 
+        id, name, author, performers, image, lyric, ref_urls, 
+        categories, tags, scores, last_sung_at, sing_count, 
         priority, last_update, created_at
       ) VALUES (
-        ${newSong.id}, ${newSong.name}, ${newSong.author}, 
-        ${newSong.performers}, ${newSong.image}, ${newSong.lyric}, 
-        ${newSong.refUrls}, ${newSong.categories}, ${newSong.tags}, 
-        ${newSong.scores}, ${newSong.lastSungAt}, ${newSong.singCount}, 
-        ${newSong.priority}, ${newSong.last_update}, ${newSong.created_at}
+        ${dbSong.id}, ${dbSong.name}, ${dbSong.author}, 
+        ${dbSong.performers}, ${dbSong.image}, ${dbSong.lyric}, 
+        ${dbSong.ref_urls}, ${dbSong.categories}, ${dbSong.tags}, 
+        ${dbSong.scores}, ${dbSong.last_sung_at}, ${dbSong.sing_count}, 
+        ${dbSong.priority}, ${dbSong.last_update}, ${dbSong.created_at}
       )
     `;
     
@@ -70,22 +73,23 @@ export async function PUT(req: NextRequest) {
     await ensureDatabase();
     const song: Song = await req.json();
     
+    const dbSong = mapFrontendToDatabase(song);
     const result = await sql`
       UPDATE songs SET 
-        name = ${song.name},
-        author = ${song.author},
-        performers = ${song.performers},
-        image = ${song.image},
-        lyric = ${song.lyric},
-        refUrls = ${song.refUrls},
-        categories = ${song.categories},
-        tags = ${song.tags},
-        scores = ${song.scores},
-        lastSungAt = ${song.lastSungAt},
-        singCount = ${song.singCount},
-        priority = ${song.priority},
+        name = ${dbSong.name},
+        author = ${dbSong.author},
+        performers = ${dbSong.performers},
+        image = ${dbSong.image},
+        lyric = ${dbSong.lyric},
+        ref_urls = ${dbSong.ref_urls},
+        categories = ${dbSong.categories},
+        tags = ${dbSong.tags},
+        scores = ${dbSong.scores},
+        last_sung_at = ${dbSong.last_sung_at},
+        sing_count = ${dbSong.sing_count},
+        priority = ${dbSong.priority},
         last_update = ${new Date().toISOString()}
-      WHERE id = ${song.id}
+      WHERE id = ${dbSong.id}
       RETURNING *
     `;
     
@@ -93,7 +97,8 @@ export async function PUT(req: NextRequest) {
       return NextResponse.json({ error: 'Song not found' }, { status: 404 });
     }
     
-    return NextResponse.json(result[0]);
+    const updatedSong = isDatabaseSong(result[0]) ? mapDatabaseToFrontend(result[0]) : result[0];
+    return NextResponse.json(updatedSong);
   } catch (error) {
     console.error('Error updating song:', error);
     return NextResponse.json({ error: 'Failed to update song' }, { status: 500 });
@@ -113,7 +118,8 @@ export async function DELETE(req: NextRequest) {
       return NextResponse.json({ error: 'Song not found' }, { status: 404 });
     }
     
-    return NextResponse.json(result[0]);
+    const deletedSong = isDatabaseSong(result[0]) ? mapDatabaseToFrontend(result[0]) : result[0];
+    return NextResponse.json(deletedSong);
   } catch (error) {
     console.error('Error deleting song:', error);
     return NextResponse.json({ error: 'Failed to delete song' }, { status: 500 });
@@ -135,8 +141,8 @@ export async function PATCH(req: NextRequest) {
     const result = await sql`
       UPDATE songs SET 
         scores = array_append(scores, ${rating}),
-        singCount = singCount + 1,
-        lastSungAt = ${now},
+        sing_count = sing_count + 1,
+        last_sung_at = ${now},
         last_update = ${now}
       WHERE id = ${id}
       RETURNING *
@@ -146,7 +152,8 @@ export async function PATCH(req: NextRequest) {
       return NextResponse.json({ error: 'Song not found' }, { status: 404 });
     }
     
-    return NextResponse.json(result[0]);
+    const ratedSong = isDatabaseSong(result[0]) ? mapDatabaseToFrontend(result[0]) : result[0];
+    return NextResponse.json(ratedSong);
   } catch (error) {
     console.error('Error rating song:', error);
     return NextResponse.json({ error: 'Failed to rate song' }, { status: 500 });
