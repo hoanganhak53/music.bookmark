@@ -1,97 +1,154 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { Song } from '@/types';
-import { promises as fs } from 'fs';
-import path from 'path';
+import { sql, initDatabase } from '@/utils/db';
 
-const DATA_PATH = path.join(process.cwd(), 'data', 'songs.json');
+// Khởi tạo database khi API được gọi lần đầu
+let dbInitialized = false;
 
-async function readSongs(): Promise<Song[]> {
-  const data = await fs.readFile(DATA_PATH, 'utf-8');
-  return JSON.parse(data);
-}
-
-async function writeSongs(songs: Song[]): Promise<void> {
-  await fs.writeFile(DATA_PATH, JSON.stringify(songs, null, 2), 'utf-8');
+async function ensureDatabase() {
+  if (!dbInitialized) {
+    await initDatabase();
+    dbInitialized = true;
+  }
 }
 
 export async function GET() {
-  const songs = await readSongs();
-  return NextResponse.json(songs);
+  try {
+    await ensureDatabase();
+    const songs = await sql`SELECT * FROM songs ORDER BY priority DESC, last_update DESC`;
+    return NextResponse.json(songs);
+  } catch (error) {
+    console.error('Error fetching songs:', error);
+    return NextResponse.json({ error: 'Failed to fetch songs' }, { status: 500 });
+  }
 }
 
 export async function POST(req: NextRequest) {
-  const songData: Partial<Song> = await req.json();
-  const songs = await readSongs();
-  
-  const now = new Date().toISOString();
-  const newSong: Song = {
-    ...songData,
-    id: songData.id || Date.now().toString(),
-    last_update: now,
-    created_at: now,
-    performers: songData.performers || [],
-    refUrls: songData.refUrls || [],
-    categories: songData.categories || [],
-    tags: songData.tags || [],
-    scores: songData.scores || [],
-    lastSungAt: songData.lastSungAt || null,
-    singCount: songData.singCount || 0,
-    priority: songData.priority || 0,
-  } as Song;
-  
-  songs.unshift(newSong); // Thêm vào đầu danh sách
-  await writeSongs(songs);
-  return NextResponse.json(newSong, { status: 201 });
+  try {
+    await ensureDatabase();
+    const songData: Partial<Song> = await req.json();
+    
+    const now = new Date().toISOString();
+    const newSong: Song = {
+      ...songData,
+      id: songData.id || Date.now().toString(),
+      last_update: now,
+      created_at: now,
+      performers: songData.performers || [],
+      refUrls: songData.refUrls || [],
+      categories: songData.categories || [],
+      tags: songData.tags || [],
+      scores: songData.scores || [],
+      lastSungAt: songData.lastSungAt || null,
+      singCount: songData.singCount || 0,
+      priority: songData.priority || 0,
+    } as Song;
+    
+    await sql`
+      INSERT INTO songs (
+        id, name, author, performers, image, lyric, refUrls, 
+        categories, tags, scores, lastSungAt, singCount, 
+        priority, last_update, created_at
+      ) VALUES (
+        ${newSong.id}, ${newSong.name}, ${newSong.author}, 
+        ${newSong.performers}, ${newSong.image}, ${newSong.lyric}, 
+        ${newSong.refUrls}, ${newSong.categories}, ${newSong.tags}, 
+        ${newSong.scores}, ${newSong.lastSungAt}, ${newSong.singCount}, 
+        ${newSong.priority}, ${newSong.last_update}, ${newSong.created_at}
+      )
+    `;
+    
+    return NextResponse.json(newSong, { status: 201 });
+  } catch (error) {
+    console.error('Error creating song:', error);
+    return NextResponse.json({ error: 'Failed to create song' }, { status: 500 });
+  }
 }
 
 export async function PUT(req: NextRequest) {
-  const song: Song = await req.json();
-  const songs = await readSongs();
-  const idx = songs.findIndex((s) => s.id === song.id);
-  if (idx === -1) {
-    return NextResponse.json({ error: 'Song not found' }, { status: 404 });
+  try {
+    await ensureDatabase();
+    const song: Song = await req.json();
+    
+    const result = await sql`
+      UPDATE songs SET 
+        name = ${song.name},
+        author = ${song.author},
+        performers = ${song.performers},
+        image = ${song.image},
+        lyric = ${song.lyric},
+        refUrls = ${song.refUrls},
+        categories = ${song.categories},
+        tags = ${song.tags},
+        scores = ${song.scores},
+        lastSungAt = ${song.lastSungAt},
+        singCount = ${song.singCount},
+        priority = ${song.priority},
+        last_update = ${new Date().toISOString()}
+      WHERE id = ${song.id}
+      RETURNING *
+    `;
+    
+    if (result.length === 0) {
+      return NextResponse.json({ error: 'Song not found' }, { status: 404 });
+    }
+    
+    return NextResponse.json(result[0]);
+  } catch (error) {
+    console.error('Error updating song:', error);
+    return NextResponse.json({ error: 'Failed to update song' }, { status: 500 });
   }
-  songs[idx] = song;
-  await writeSongs(songs);
-  return NextResponse.json(song);
 }
 
 export async function DELETE(req: NextRequest) {
-  const { id } = await req.json();
-  const songs = await readSongs();
-  const idx = songs.findIndex((s) => s.id === id);
-  if (idx === -1) {
-    return NextResponse.json({ error: 'Song not found' }, { status: 404 });
+  try {
+    await ensureDatabase();
+    const { id } = await req.json();
+    
+    const result = await sql`
+      DELETE FROM songs WHERE id = ${id} RETURNING *
+    `;
+    
+    if (result.length === 0) {
+      return NextResponse.json({ error: 'Song not found' }, { status: 404 });
+    }
+    
+    return NextResponse.json(result[0]);
+  } catch (error) {
+    console.error('Error deleting song:', error);
+    return NextResponse.json({ error: 'Failed to delete song' }, { status: 500 });
   }
-  const deleted = songs.splice(idx, 1)[0];
-  await writeSongs(songs);
-  return NextResponse.json(deleted);
 }
 
 // API để rate bài hát (thêm điểm và cập nhật singCount, lastSungAt)
 export async function PATCH(req: NextRequest) {
-  const { id, rating } = await req.json();
-  
-  if (!id || !rating || rating < 1 || rating > 5) {
-    return NextResponse.json({ error: 'Invalid rating (must be 1-5)' }, { status: 400 });
+  try {
+    await ensureDatabase();
+    const { id, rating } = await req.json();
+    
+    if (!id || !rating || rating < 1 || rating > 5) {
+      return NextResponse.json({ error: 'Invalid rating (must be 1-5)' }, { status: 400 });
+    }
+    
+    const now = new Date().toISOString();
+    
+    const result = await sql`
+      UPDATE songs SET 
+        scores = array_append(scores, ${rating}),
+        singCount = singCount + 1,
+        lastSungAt = ${now},
+        last_update = ${now}
+      WHERE id = ${id}
+      RETURNING *
+    `;
+    
+    if (result.length === 0) {
+      return NextResponse.json({ error: 'Song not found' }, { status: 404 });
+    }
+    
+    return NextResponse.json(result[0]);
+  } catch (error) {
+    console.error('Error rating song:', error);
+    return NextResponse.json({ error: 'Failed to rate song' }, { status: 500 });
   }
-  
-  const songs = await readSongs();
-  const idx = songs.findIndex((s) => s.id === id);
-  if (idx === -1) {
-    return NextResponse.json({ error: 'Song not found' }, { status: 404 });
-  }
-  
-  const song = songs[idx];
-  const now = new Date().toISOString();
-  
-  // Cập nhật song
-  if (!song.scores) song.scores = [];
-  song.scores.push(rating);
-  song.singCount += 1;
-  song.lastSungAt = now;
-  song.last_update = now;
-  
-  await writeSongs(songs);
-  return NextResponse.json(song);
 }

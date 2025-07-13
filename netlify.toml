@@ -5,9 +5,15 @@
 [build.environment]
   NODE_VERSION = "18"
 
+# Redirects cho Next.js App Router
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/___netlify-handler"
+  status = 200
+
 [[redirects]]
   from = "/*"
-  to = "/index.html"
+  to = "/.netlify/functions/___netlify-handler"
   status = 200
 
 [[headers]]
