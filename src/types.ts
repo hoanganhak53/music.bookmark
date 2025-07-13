@@ -5,12 +5,12 @@ export interface Song {
   performers: string[];
   image: string;
   lyric: string;
-  refUrls: string[];
+  ref_urls: string[];
   categories: string[];
   tags: string[];
   scores: number[]; // Mảng các điểm vote từ 1-5 sao
-  lastSungAt: string | null;
-  singCount: number;
+  last_sung_at: string | null;
+  sing_count: number;
   priority: number;
   last_update: string;
   created_at: string;

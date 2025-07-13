@@ -71,13 +71,13 @@ export default function SongDetailModal({ open, onOpenChange, song, onSing, onBo
                 </div>
                 <div className="flex items-center gap-2 px-2 sm:px-3 py-1 sm:py-1.5 rounded-lg bg-green-50 border border-green-100 shadow-sm text-green-700 font-semibold text-sm sm:text-base">
                   <Mic className="w-4 h-4 sm:w-5 sm:h-5 text-green-400" />
-                  <span>{song.singCount} lần hát</span>
+                  <span>{song.sing_count} lần hát</span>
                 </div>
               </div>
               {/* Last sung & Bookmark status */}
               <div className="flex gap-2 sm:gap-4 items-center mb-3">
                 <div className="flex items-center gap-2 px-2 sm:px-3 py-1 sm:py-1.5 rounded-lg bg-blue-50 border border-blue-100 shadow-sm text-blue-700 font-semibold text-sm sm:text-base">
-                  <span>Lần cuối: {song.lastSungAt ? new Date(song.lastSungAt).toLocaleDateString() : "Chưa hát"}</span>
+                  <span>Lần cuối: {song.last_sung_at ? new Date(song.last_sung_at).toLocaleDateString() : "Chưa hát"}</span>
                 </div>
                 {isBookmarked !== undefined && (
                   <div className="flex items-center gap-2 px-2 sm:px-3 py-1 sm:py-1.5 rounded-lg bg-gray-50 border border-gray-100 shadow-sm font-semibold text-sm sm:text-base">
@@ -118,10 +118,10 @@ export default function SongDetailModal({ open, onOpenChange, song, onSing, onBo
                 )}
               </div>
               {/* Links - moved below actions */}
-              {song.refUrls && song.refUrls.length > 0 && (
+              {song.ref_urls && song.ref_urls.length > 0 && (
                 <div className="flex flex-wrap gap-2 mt-3 sm:mt-4 mb-2 items-center">
                   <LinkIcon className="w-4 h-4 text-blue-400" />
-                  {song.refUrls.map((url, idx) => (
+                  {song.ref_urls.map((url, idx) => (
                     <a key={url} href={url} target="_blank" rel="noopener noreferrer" className="text-blue-500 underline text-xs hover:text-blue-700 transition-colors">
                       Link {idx + 1}
                     </a>

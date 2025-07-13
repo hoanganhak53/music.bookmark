@@ -12,7 +12,7 @@ interface EditSongModalProps {
 }
 
 export default function EditSongModal({ open, onOpenChange, song, onEdit }: EditSongModalProps) {
-  const [form, setForm] = useState<Partial<Song>>({ performers: [], refUrls: [], categories: [], tags: [] });
+  const [form, setForm] = useState<Partial<Song>>({ performers: [], ref_urls: [], categories: [], tags: [] });
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [imagePreview, setImagePreview] = useState<string>("");
@@ -27,7 +27,7 @@ export default function EditSongModal({ open, onOpenChange, song, onEdit }: Edit
         performers: song.performers || [],
         image: song.image,
         lyric: song.lyric,
-        refUrls: song.refUrls || [],
+        ref_urls: song.ref_urls || [],
         categories: song.categories || [],
         tags: song.tags || [],
       });
@@ -115,7 +115,7 @@ export default function EditSongModal({ open, onOpenChange, song, onEdit }: Edit
       performers: form.performers || [],
       image: form.image || "",
       lyric: form.lyric || "",
-      refUrls: form.refUrls || [],
+      ref_urls: form.ref_urls || [],
       categories: form.categories || [],
       tags: form.tags || [],
       last_update: new Date().toISOString(),
@@ -260,11 +260,11 @@ export default function EditSongModal({ open, onOpenChange, song, onEdit }: Edit
                       Link tham khảo
                     </label>
                     <input 
-                      name="refUrls" 
+                      name="ref_urls" 
                       placeholder="Nhập link tham khảo (cách nhau dấu phẩy)..." 
                       className="w-full border rounded px-2 sm:px-3 py-2 text-sm sm:text-base text-gray-800 placeholder-gray-500" 
-                      value={(form.refUrls||[]).join(", ")} 
-                      onChange={e=>handleArrayChange("refUrls",e.target.value)} 
+                      value={(form.ref_urls||[]).join(", ")} 
+                      onChange={e=>handleArrayChange("ref_urls",e.target.value)} 
                     />
                   </div>
                   

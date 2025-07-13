@@ -127,7 +127,7 @@ export default function SongCard({
               </span>
               <span className="flex items-center gap-1">
                 <Music className="w-4 h-4 text-green-400" />
-                {song.singCount} lần hát
+                {song.sing_count} lần hát
               </span>
             </div>
             <div className="flex flex-wrap gap-1">
@@ -237,9 +237,9 @@ export default function SongCard({
             <div className="flex flex-row items-center gap-4 text-xs text-gray-500">
               <span className="flex items-center gap-1">
                 <span className="w-2 h-2 bg-green-400 rounded-full"></span>
-                Số lần hát: {song.singCount}
+                Số lần hát: {song.sing_count}
               </span>
-              <span>Lần hát gần nhất: {song.lastSungAt ? new Date(song.lastSungAt).toLocaleDateString() : "-"}</span>
+              <span>Lần hát gần nhất: {song.last_sung_at ? new Date(song.last_sung_at).toLocaleDateString() : "-"}</span>
               <span className="flex items-center gap-1">
                 <Star className="w-3 h-3 text-yellow-400 fill-current" />
                 {averageScore}/5 ({song.scores?.length || 0} lượt)

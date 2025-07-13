@@ -57,12 +57,20 @@ export default function HomePage() {
     fetch("/api/song")
       .then((res) => res.json())
       .then((data) => {
+        console.log('🔍 Raw API response:', data);
+        
         // Đảm bảo tất cả songs đều có scores array
         const normalizedSongs = data.map((song: Song) => ({
           ...song,
           scores: song.scores || []
         }));
+        
+
+        
         setSongs(normalizedSongs);
+      })
+      .catch((error) => {
+        console.error('❌ Error fetching songs:', error);
       });
     
     // Load bookmarked songs from localStorage
@@ -105,11 +113,11 @@ export default function HomePage() {
           const scoreB = getAverageScore(b.scores);
           return parseFloat(scoreB) - parseFloat(scoreA);
         case "singCount":
-          if (b.singCount !== a.singCount) return b.singCount - a.singCount;
+          if (b.sing_count !== a.sing_count) return b.sing_count - a.sing_count;
           break;
         case "lastSung":
-          if (b.lastSungAt && a.lastSungAt)
-            return new Date(b.lastSungAt).getTime() - new Date(a.lastSungAt).getTime();
+          if (b.last_sung_at && a.last_sung_at)
+            return new Date(b.last_sung_at).getTime() - new Date(a.last_sung_at).getTime();
           break;
       }
       return 0;

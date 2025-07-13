@@ -13,7 +13,7 @@ interface AddSongModalProps {
 }
 
 export default function AddSongModal({ open, onOpenChange, onAdd }: AddSongModalProps) {
-  const [form, setForm] = useState<Partial<Song>>({ performers: [], refUrls: [], categories: [], tags: [] });
+  const [form, setForm] = useState<Partial<Song>>({ performers: [], ref_urls: [], categories: [], tags: [] });
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [youtubeUrl, setYoutubeUrl] = useState("");
@@ -105,7 +105,7 @@ export default function AddSongModal({ open, onOpenChange, onAdd }: AddSongModal
         author: songInfo.artist || youtubeInfo.author || "",
         performers: songInfo.artist ? [songInfo.artist] : (youtubeInfo.author ? [youtubeInfo.author] : []),
         image: youtubeInfo.thumbnail || "",
-        refUrls: [youtubeUrl],
+        ref_urls: [youtubeUrl],
         lyric: extractedLyrics || youtubeInfo.description || ""
       }));
       
@@ -143,12 +143,12 @@ export default function AddSongModal({ open, onOpenChange, onAdd }: AddSongModal
         performers: form.performers || [],
         image: form.image?.trim() || "",
         lyric: form.lyric?.trim() || "",
-        refUrls: form.refUrls || [],
+        ref_urls: form.ref_urls || [],
         categories: form.categories || [],
         tags: form.tags || [],
         scores: [],
-        singCount: 0,
-        lastSungAt: null,
+        sing_count: 0,
+        last_sung_at: null,
         priority: 0,
         last_update: new Date().toISOString(),
         created_at: new Date().toISOString(),
@@ -164,7 +164,7 @@ export default function AddSongModal({ open, onOpenChange, onAdd }: AddSongModal
       if (res.ok) {
         const createdSong = await res.json();
         onAdd(createdSong);
-        setForm({ performers: [], refUrls: [], categories: [], tags: [] });
+        setForm({ performers: [], ref_urls: [], categories: [], tags: [] });
         setImagePreview("");
         setImageError(false);
         setError("");
@@ -338,11 +338,11 @@ export default function AddSongModal({ open, onOpenChange, onAdd }: AddSongModal
                       Link tham khảo
                     </label>
                     <input 
-                      name="refUrls" 
-                      placeholder="Nhập link tham khảo (cách nhau dấu phẩy)..." 
-                      className="w-full border rounded px-2 sm:px-3 py-2 text-sm sm:text-base text-gray-800 placeholder-gray-500" 
-                      value={(form.refUrls||[]).join(", ")} 
-                      onChange={e=>handleArrayChange("refUrls",e.target.value)} 
+                                            name="ref_urls"
+                      placeholder="Nhập link tham khảo (cách nhau dấu phẩy)..."
+                      className="w-full border rounded px-2 sm:px-3 py-2 text-sm sm:text-base text-gray-800 placeholder-gray-500"
+                      value={(form.ref_urls||[]).join(", ")}
+                      onChange={e=>handleArrayChange("ref_urls",e.target.value)} 
                     />
                   </div>
                   
