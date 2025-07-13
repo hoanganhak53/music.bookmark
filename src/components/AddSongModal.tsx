@@ -154,12 +154,24 @@ export default function AddSongModal({ open, onOpenChange, onAdd }: AddSongModal
         created_at: new Date().toISOString(),
       };
 
-      onAdd(newSong);
-      setForm({ performers: [], refUrls: [], categories: [], tags: [] });
-      setImagePreview("");
-      setImageError(false);
-      setError("");
-      onOpenChange(false);
+      // Gửi API request để tạo bài hát mới
+      const res = await fetch("/api/song", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(newSong),
+      });
+
+      if (res.ok) {
+        const createdSong = await res.json();
+        onAdd(createdSong);
+        setForm({ performers: [], refUrls: [], categories: [], tags: [] });
+        setImagePreview("");
+        setImageError(false);
+        setError("");
+        onOpenChange(false);
+      } else {
+        setError("Có lỗi xảy ra khi thêm bài hát");
+      }
     } catch (error) {
       setError("Có lỗi xảy ra khi thêm bài hát");
     } finally {
